@@ -318,6 +318,10 @@ func CopyArbitraryValue(anyValue any) Value { //nolint:gocyclo // yes, we know i
 		}
 		return Raw(*o)
 	default:
+		if value, ok := tryArbitraryCollectionCopy(o); ok {
+			return value
+		}
+
 		return FromJSONMarshal(anyValue)
 	}
 }
